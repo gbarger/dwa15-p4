@@ -7,24 +7,17 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-	<h1>My Online Music Library</h1>
 
-	<div id="controls">
-	</div>
+	@if (isset($errors) && is_array($errors) && count($errors) > 0)
+		<div id="errorText">
+			<ul>
+				@foreach ($errors as $e)
+					<li>{{$e}}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
 
-	<div id="nav">
-		<ul>
-			<li><a href="./library">My Library</a></li>
-		</ul>
-		<ul id="playlists">
-			@foreach($playlists as $playlist)
-				<li>$playlist->name</li>
-			@endforeach
-		</ul>
-	</div>
-
-	<div id="content">
-		@yield('content')
-	</div>
+	@yield('body')
 </body>
 </html>

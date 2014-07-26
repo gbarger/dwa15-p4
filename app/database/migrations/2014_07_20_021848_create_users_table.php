@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration {
 			$table->timestamps();
 
 			// ---create fields specific for this table---
-			$table->string('username');
+			$table->string('email');
 			$table->string('password');
-			$table->string('remember_token');
+			$table->string('remember_token',100)->nullable();
 		});
 	}
 

@@ -2,7 +2,7 @@
 
 @section('body')
 	<div id="loginform">
-		{{ Form::open(array('url' => './login', 'method' => 'POST')); }}
+		{{ Form::open(array('url' => './signup', 'method' => 'POST')); }}
 			<table>
 				<tbody>
 					<tr>
@@ -12,6 +12,10 @@
 					<tr>
 						<td>{{ Form::label('password', 'Password: '); }}</td>
 						<td>{{ Form::password('password'); }}</td>
+					</tr>
+					<tr>
+						<td>{{ Form::label('confirm', 'Re-enter Password: '); }}</td>
+						<td>{{ Form::password('confirm'); }}</td>
 					</tr>
 					<tr>
 						<td>{{ Form::label('remember', 'Remember Me: '); }}</td>

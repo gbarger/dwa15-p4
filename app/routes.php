@@ -16,30 +16,129 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('/login', function() 
-{
-	// display login page
-});
+Route::get('/login', 
+	array
+	(
+		'before' => 'guest',
+		function() 
+		{
+			return View::make('login');
+		}
+	)
+);
 
-Route::post('/login', function() 
-{
-	// post login details and confirm auth
-});
+Route::post('/login', 
+	array
+	(
+		'before' => 'csrf',
+		function() 
+		{
+			$cred = Input::only('email','password');
+			$rem = Input::get('remember');
 
-Route::get('/signup', function()
-{
-	// display signup page
-});
+			if (Auth::attempt($cred, $remember = $rem))
+			{
+				return Redirect::intended('/library');
+			}
+			else
+			{
+				$errors = array();
+				$errors[] = 'Your login attempt was incorrect';
 
-Route::post('/signup', function()
-{
-	// post to signup page, then log in
-});
+				return Redirect::to('/login')->with('errors', $errors);
+			}
+		}
+	)
+);
 
-Route::get('/library/{format?}', function($format = 'html')
-{
-	// display the library page, or return songs in json format
-});
+Route::get('/logout', 
+	function()
+	{
+		Auth::logout();
+
+		return Redirect::to('/');
+	}
+);
+
+Route::get('/signup', 
+	array
+	(
+		'before' => 'guest',
+		function()
+		{
+			return View::make('signup');
+		}
+	)
+);
+
+Route::post('/signup', 
+	array
+	(
+		'before' => 'csrf',
+		function()
+		{
+			$errors = array();
+			$em = Input::get('email');
+			$pw = Input::get('password');
+			$pw2 = Input::get('confirm');
+			$rem = Input::get('remember');
+
+			if ($em == '')
+				$errors[] = 'Email must not be blank.';
+
+			if ($pw == '')
+				$errors[] = 'Password must not be blank.';
+
+			if ($pw2 == '')
+				$errors[] = 'Password confirmation must be completed.';
+
+			if ($pw != $pw2)
+				$errors[] = 'Password and confirmation must match.';
+
+			if (count($errors) > 0)
+			{
+				return View::make('signup')->with('errors', $errors);
+			}
+			else
+			{
+				$user = new User;
+				$user->email = $em;
+				$user->password = Hash::make($pw);
+
+				try
+				{
+					$user->save();
+				}
+				catch(Exception $e)
+				{
+					$errors = array('There was an error saving the user: ' . $e);
+					return View::make('signup')->with('errors', $errors);
+				}
+
+				Auth::login($user, $remember = $rem);
+
+				return View::make('hello');
+			}
+		}
+	)
+);
+
+Route::get('/library/{format?}', 
+	array
+	(
+		'before' => 'auth',
+		function($format = 'html')
+		{
+			$uid = Auth::id();
+			$songs = Song::where('user_id', '=', $uid)->get();
+			$plists = Playlist::where('user_id', '=', $uid)->get();
+
+			return View::make('library')
+				->with('songs', $songs)
+				->with('playlists', $plists);
+		}
+	)
+);
 
 Route::post('/library', function()
 {

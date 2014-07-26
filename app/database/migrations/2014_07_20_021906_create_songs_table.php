@@ -27,6 +27,7 @@ class CreateSongsTable extends Migration {
 
 			// create fields for song details
 			$table->string('image_path');
+			$table->string('file_path');
 			$table->string('title');
 			$table->string('artist');
 			$table->string('album');
