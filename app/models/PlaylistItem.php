@@ -8,14 +8,4 @@ class PlaylistItem extends Eloquent
 	 * @var string
 	 */
 	protected $table = 'playlistitems';
-
-	public function playlists()
-	{
-		$this->hasMany('Playlist');
-	}
-
-	public function songs()
-	{
-		$this->hasMany('Song');
-	}
 }

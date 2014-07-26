@@ -13,4 +13,9 @@ class Song extends Eloquent
 	{
 		$this->belongsToMany('Playlist');
 	}
+
+	public function playlistItems()
+	{
+		$this->hasMany('PlaylistItem');
+	}
 }

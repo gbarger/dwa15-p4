@@ -16,33 +16,57 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('/library/{format?}', function($format = 'html')
+Route::get('/login', function() 
 {
-	$testQuery = User::first();
-
-	$user = new User();
-	$user->username = 'test@test.com';
-	$user->password = 'test';
-	$remember_token = 'yep';
-	$user->save();
-	$songs = array();
-
-	for ($i = 1; $i <= 10; $i++)
-	{
-		$song = new Song();
-		$song->artist = 'Artist ' . $i;
-		$song->user_id = $user->id;
-		$song->save();
-	}
-
-	$getSongs = Song::all();
-
-	$plist = new Playlist();
-	$plist->name = 'test';
-	$plist->save();
-
-	return Response::json($getSongs);
-
+	// display login page
 });
 
-Route::get('/login', 'UserController@getLogin');
+Route::post('/login', function() 
+{
+	// post login details and confirm auth
+});
+
+Route::get('/signup', function()
+{
+	// display signup page
+});
+
+Route::post('/signup', function()
+{
+	// post to signup page, then log in
+});
+
+Route::get('/library/{format?}', function($format = 'html')
+{
+	// display the library page, or return songs in json format
+});
+
+Route::post('/library', function()
+{
+	// post updates to the library (songs database)
+});
+
+Route::get('/playlists', function()
+{
+	// return playlist details for page
+});
+
+Route::post('/playlist', function()
+{
+	// post changes to playlist name using playlist id
+});
+
+Route::get('/playlist-items/{id}', function()
+{
+	// pass playlist id and get list of songs for playlist
+});
+
+Route::post('/playlist-item', function()
+{
+	// post update to playlist-item (playlist order)
+});
+
+App::missing(function($exception)
+{
+	// return 404 error page
+});
