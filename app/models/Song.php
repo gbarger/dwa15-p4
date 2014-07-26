@@ -1,4 +1,4 @@
-<?
+<?php
 
 class Song extends Eloquent
 {
@@ -9,14 +9,8 @@ class Song extends Eloquent
 	 */
 	protected $table = 'songs';
 
-	public $created_at;
-	public $updated_at;
-	public $user_id;
-	public $image_path;
-	public $title;
-	public $artist;
-	public $album;
-	public $year;
-	public $track;
-	public $genre;
+	public function playlists()
+	{
+		$this->belongsToMany('Playlist');
+	}
 }

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration {
 			// ---create fields specific for this table---
 			$table->string('username');
 			$table->string('password');
+			$table->string('remember_token');
 		});
 	}
 

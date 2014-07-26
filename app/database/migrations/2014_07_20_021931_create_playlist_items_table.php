@@ -13,19 +13,21 @@ class CreatePlaylistItemsTable extends Migration {
 	public function up()
 	{
 		// ---create playlist items table---
-		Schema::create('playlist_items', function($table)
+		Schema::create('playlistitems', function($table)
 		{
 			// create standard fields
 			$table->increments('id');
 			$table->timestamps();
 
 			// ---create fields specific for this table---
+			$table->integer('order')->unsigned();
+
 			// relationships
-			$table->integer('playlist_id')
+			$table->integer('playlist_id')->unsigned()
 				->references('id')->on('playlists')
 				->onDelete('cascade');
 
-			$table->integer('song_id')
+			$table->integer('song_id')->unsigned()
 				->references('id')->on('songs')
 				->onDelete('cascade');;
 		});
@@ -39,7 +41,6 @@ class CreatePlaylistItemsTable extends Migration {
 	public function down()
 	{
 		// drop the playlist items table
-		Schema::drop('playlist_items');
+		Schema::drop('playlistitems');
 	}
-
 }

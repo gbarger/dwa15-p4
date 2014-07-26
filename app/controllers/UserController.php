@@ -82,5 +82,18 @@ class UserController extends \BaseController {
 		//
 	}
 
+	public function getLogin()
+	{
+		return View::make('login');
+	}
 
+	public function login()
+	{
+
+	}
+
+	public function logout()
+	{
+		
+	}
 }

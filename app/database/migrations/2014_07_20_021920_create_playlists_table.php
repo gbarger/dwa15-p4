@@ -21,7 +21,7 @@ class CreatePlaylistsTable extends Migration {
 
 			// ---create fields specific for this table---
 			// relationships
-			$table->integer('user_id')
+			$table->integer('user_id')->unsigned()
 				->references('id')->on('users')
 				->onDelete('cascade');
 

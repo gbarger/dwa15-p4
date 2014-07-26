@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<title>
-		@yield('title','DBF')
+		@yield('title','MOML')
 	</title>
 	<meta charset="utf-8" />
 </head>
@@ -17,7 +17,9 @@
 			<li><a href="./library">My Library</a></li>
 		</ul>
 		<ul id="playlists">
-			@yield('playlists')
+			@foreach($playlists as $playlist)
+				<li>$playlist->name</li>
+			@endforeach
 		</ul>
 	</div>
 
