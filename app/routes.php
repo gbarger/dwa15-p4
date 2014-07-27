@@ -133,9 +133,16 @@ Route::get('/library/{format?}',
 			$songs = Song::where('user_id', '=', $uid)->get();
 			$plists = Playlist::where('user_id', '=', $uid)->get();
 
-			return View::make('library')
-				->with('songs', $songs)
-				->with('playlists', $plists);
+			if ($format == 'json')
+			{
+				return Response::json($songs);
+			}
+			else
+			{
+				return View::make('library')
+					->with('songs', $songs)
+					->with('playlists', $plists);
+			}
 		}
 	)
 );
@@ -155,15 +162,81 @@ Route::post('/playlist', function()
 	// post changes to playlist name using playlist id
 });
 
-Route::get('/playlist-items/{id}', function()
-{
-	// pass playlist id and get list of songs for playlist
-});
+Route::get('/playlist-items/{pid}', 
+	array
+	(
+		'before' => 'auth',
+		function($pid)
+		{
+			$uid = Auth::id();
+
+			$songs = PlaylistItem::with('song')->where('playlist_id', '=', $pid)->orderBy('order')->get();
+
+			return Response::json($songs);
+		}
+	)
+);
 
 Route::post('/playlist-item', function()
 {
 	// post update to playlist-item (playlist order)
 });
+
+Route::post('upload',
+	array
+	(
+		'before'=>'auth',
+		function()
+		{
+			$allowExt = array('mp3','ogg','m4a');
+			$file = Input::file('file');
+			$filename = $file->getClientOriginalName();
+			$extension = $file->getClientOriginalExtension();
+			$userid = Auth::id();
+			$path = 'songs/' . $userid . '/';
+
+			if(!File::exists($path))
+			{
+				File::makeDirectory($path, 0777);
+			}
+
+			if (in_array($extension, $allowExt))
+			{
+				if (File::exists($path . $filename))
+				{
+					$i = 1;
+					while(true)
+					{
+						if (!File::exists($path . '(' . $i . ')' . $filename))
+						{
+							$filename = '(' . $i . ')' . $filename;
+							break;
+						}
+						else
+						{
+							$i++;
+						}
+					}
+				}
+
+				$file->move($path, $filename);
+
+				$song = new Song();
+				$song->user_id = $userid;
+				$song->title = $filename;
+				$song->file_path = './' . $path . $filename;
+				$song->save();
+
+				return Response::make('uploaded file: ' . $filename, 200);
+			}
+			else
+			{
+				File::delete($file);
+				return Response::make('File type not allowed: ' . $extension, 415);
+			}
+		}
+	)
+);
 
 App::missing(function($exception)
 {

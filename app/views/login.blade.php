@@ -1,5 +1,9 @@
 @extends('_master')
 
+@section('title')
+	Log In
+@stop
+
 @section('body')
 	<div id="loginform">
 		{{ Form::open(array('url' => './login', 'method' => 'POST')); }}

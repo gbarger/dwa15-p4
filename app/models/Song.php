@@ -9,13 +9,18 @@ class Song extends Eloquent
 	 */
 	protected $table = 'songs';
 
+	public function user()
+	{
+		return $this->belongsTo('User');
+	}
+
 	public function playlists()
 	{
-		$this->belongsToMany('Playlist');
+		return $this->belongsToMany('Playlist');
 	}
 
 	public function playlistItems()
 	{
-		$this->hasMany('PlaylistItem');
+		return $this->hasMany('PlaylistItem');
 	}
 }

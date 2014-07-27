@@ -1,0 +1,44 @@
+h5
+{
+	margin: 0;
+}
+
+.gradient
+{
+	/*
+	 * Light gray: #C3C3C1;
+	 * Dark grey: #A4A2A3;
+	 */
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0.11, #EAEAE8),
+		color-stop(0.94, #C3C3C1)
+	);
+
+	background-image: -o-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
+	background-image: -moz-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
+	background-image: -webkit-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
+	background-image: -ms-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
+	background-image: linear-gradient(to bottom, #EAEAE8 11%, #C3C3C1 94%);
+}
+
+#nav
+{
+	background-color: #D4D8E3;
+	float: left;
+}
+
+/*#dropArea span
+{
+	background-color: red;
+	display: block;
+	width: 50%;
+	height: 100px;
+}*/
+
+#footer
+{
+	clear: left;
+}

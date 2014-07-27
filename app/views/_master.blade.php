@@ -5,6 +5,9 @@
 		@yield('title','MOML')
 	</title>
 	<meta charset="utf-8" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/styles.css" />
 </head>
 <body>
 

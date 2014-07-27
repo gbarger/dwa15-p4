@@ -8,4 +8,14 @@ class PlaylistItem extends Eloquent
 	 * @var string
 	 */
 	protected $table = 'playlistitems';
+
+	public function playlist()
+	{
+		return $this->belongsTo('Playlist');
+	}
+
+	public function song()
+	{
+		return $this->belongsTo('Song');
+	}
 }

@@ -1,5 +1,9 @@
 @extends('_master')
 
+@section('title')
+	MOML - Sign Up
+@stop
+
 @section('body')
 	<div id="loginform">
 		{{ Form::open(array('url' => './signup', 'method' => 'POST')); }}

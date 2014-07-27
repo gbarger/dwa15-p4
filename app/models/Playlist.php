@@ -11,11 +11,11 @@ class Playlist extends Eloquent {
 	
 	public function songs()
 	{
-		$this->belongsToMany('Song');
+		return $this->belongsToMany('Song');
 	}
 
 	public function playlistItems()
 	{
-		$this->hasMany('PlaylistItem');
+		return $this->hasMany('PlaylistItem');
 	}
 }
