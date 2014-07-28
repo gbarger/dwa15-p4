@@ -159,7 +159,7 @@ Route::get('/playlists', function()
 
 Route::post('/playlist', function()
 {
-	// post changes to playlist name using playlist id
+	// post changes to playlist name or create new playlist
 });
 
 Route::get('/playlist-items/{pid}', 
@@ -219,13 +219,24 @@ Route::post('upload',
 					}
 				}
 
-				$file->move($path, $filename);
+				$getID3 = new getID3;
+				$fileInfo = $getID3->analyze($file);
 
 				$song = new Song();
+				$song->title = getTag($fileInfo, 'title', $filename);
+				$song->artist = getTag($fileInfo, 'artist', NULL);
+				$song->album = getTag($fileInfo, 'album', NULL);
+				$song->year = getTag($fileInfo, 'year', NULL);
+				$song->track = getTag($fileInfo, 'track', NULL);
+				$song->album = getTag($fileInfo, 'album', NULL);
+				$song->genre = getTag($fileInfo, 'genre', NULL);
 				$song->user_id = $userid;
-				$song->title = $filename;
 				$song->file_path = './' . $path . $filename;
 				$song->save();
+
+				$file->move($path, $filename);
+
+				print_r($fileInfo);
 
 				return Response::make('uploaded file: ' . $filename, 200);
 			}
@@ -242,3 +253,43 @@ App::missing(function($exception)
 {
 	// return 404 error page
 });
+
+function getTag($fileInfoArray, $tagName, $altValue)
+{
+	$tagValue = '';
+
+	if (array_key_exists('tags', $fileInfoArray))
+	{
+		$tags = array();
+		$tags2 = array();
+
+		if (array_key_exists('id3v1', $fileInfoArray['tags']))
+			$tags = $fileInfoArray['tags']['id3v1'];
+
+		if (array_key_exists('id3v2', $fileInfoArray['tags']))
+			$tags2 = $fileInfoArray['tags']['id3v2'];
+
+		if (count($tags2) > 0 && 
+			array_key_exists($tagName, $tags2) && 
+			array_key_exists(0, $tags2[$tagName]) && 
+			$tags2[$tagName][0] != NULL && $tags2[$tagName][0] != '')
+		{
+			$tagValue = $tags2[$tagName][0];
+		}
+
+		if ($tagValue == '' && count($tags) > 0 && 
+			array_key_exists($tagName, $tags) && 
+			array_key_exists(0, $tags[$tagName]) && 
+			$tags[$tagName][0] != NULL && $tags[$tagName][0] != '')
+		{
+			$tagValue = $tags[$tagName][0];
+		}
+		
+		if ($tagValue == '' && $altValue != NULL && $altValue != '')
+		{
+			$tagValue = $altValue;
+		}
+	}
+	
+	return $tagValue;
+}

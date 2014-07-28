@@ -16,6 +16,9 @@ $(document).ready(function()
 						'<td>' + data[i].title + '</td>' + 
 						'<td>' + data[i].artist + '</td>' + 
 						'<td>' + data[i].album + '</td>' + 
+						'<td>' + data[i].year + '</td>' + 
+						'<td>' + data[i].track + '</td>' + 
+						'<td>' + data[i].genre + '</td>' + 
 						'</tr>';
 				}
 
@@ -53,6 +56,9 @@ $(document).ready(function()
 							'<td>' + data[i].song.title + '</td>' + 
 							'<td>' + data[i].song.artist + '</td>' + 
 							'<td>' + data[i].song.album + '</td>' + 
+							'<td>' + data[i].song.year + '</td>' + 
+							'<td>' + data[i].song.track + '</td>' + 
+							'<td>' + data[i].song.genre + '</td>' + 
 							'</tr>';
 					}
 

@@ -11,6 +11,7 @@
 	<style>
 		#nav
 		{
+
 			min-height: 400px;
 		}
 		.dropzone
@@ -54,6 +55,9 @@
 					<th>Title</th>
 					<th>Artist</th>
 					<th>Album</th>
+					<th>Year</th>
+					<th>Track</th>
+					<th>Genre</th>
 				</tr>
 			</thead>
 			<tbody id="songList">
@@ -62,6 +66,9 @@
 						<td>{{$song->title}}</td>
 						<td>{{$song->artist}}</td>
 						<td>{{$song->album}}</td>
+						<td>{{$song->year}}</td>
+						<td>{{$song->track}}</td>
+						<td>{{$song->genre}}</td>
 					</tr>
 				@endforeach
 			</tbody>
