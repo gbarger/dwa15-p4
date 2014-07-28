@@ -5,21 +5,10 @@
 @stop
 
 @section('body')
-	<link rel="stylesheet" type="text/css" href="./css/dropzone.css" />
 	<script src="./js/library.js"></script>
 	<script src="./js/dropzone.js"></script>
-	<style>
-		#nav
-		{
-
-			min-height: 400px;
-		}
-		.dropzone
-		{
-			position: static;
-			width: 100%;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="./css/dropzone.css" />
+	<link rel="stylesheet" type="text/css" href="./css/library.css" />
 
 	<div id="controls" class="gradient">
 		<h5>My Online Muic Library</h5>
@@ -33,7 +22,7 @@
 		</ul>
 
 		<h5>PLAYLISTS</h5>
-		<ul class="playlists">
+		<ul id="playlists" class="playlists">
 			@foreach($playlists as $plist)
 				<li id="pid{{$plist->id}}">{{$plist->name}}</li>
 			@endforeach
@@ -63,7 +52,7 @@
 			<tbody id="songList">
 				@foreach($songs as $song)
 					<tr>
-						<td>{{$song->title}}</td>
+						<td class="songRow" id="sid{{$song->id}}">{{$song->title}}</td>
 						<td>{{$song->artist}}</td>
 						<td>{{$song->album}}</td>
 						<td>{{$song->year}}</td>

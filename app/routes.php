@@ -177,9 +177,20 @@ Route::get('/playlist-items/{pid}',
 	)
 );
 
-Route::post('/playlist-item', function()
+Route::post('/new-playlist-item', function()
 {
-	// post update to playlist-item (playlist order)
+	$songId = Input::get('sid');
+	$playlistId = Input::get('pid');
+
+	$lastSong = PlaylistItem::where('playlist_id','=',$playlistId)->orderBy('order','desc')->get()->first();
+
+	$newItem = new PlaylistItem();
+	$newItem->song_id = $songId;
+	$newItem->playlist_id = $playlistId;
+	$newItem->order = $lastSong['attributes']['order'] + 1;
+	$newItem->save();
+
+	return Response::make('song added', 200);
 });
 
 Route::post('upload',
@@ -235,8 +246,6 @@ Route::post('upload',
 				$song->save();
 
 				$file->move($path, $filename);
-
-				print_r($fileInfo);
 
 				return Response::make('uploaded file: ' . $filename, 200);
 			}
