@@ -2,7 +2,10 @@ h5
 {
 	margin: 0;
 }
-
+ul li
+{
+	list-style-type: none;
+}
 .gradient
 {
 	/*
@@ -23,22 +26,23 @@ h5
 	background-image: -ms-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
 	background-image: linear-gradient(to bottom, #EAEAE8 11%, #C3C3C1 94%);
 }
-
 #nav
 {
+	min-height: 400px;
 	background-color: #D4D8E3;
 	float: left;
 }
-
-/*#dropArea span
-{
-	background-color: red;
-	display: block;
-	width: 50%;
-	height: 100px;
-}*/
-
 #footer
 {
-	clear: left;
+	height: 22px;
+	clear: both;
 }
+/*#createPlaylist
+{
+	float: left;
+	cursor: pointer;
+}
+#trash
+{
+	float: left;
+}*/

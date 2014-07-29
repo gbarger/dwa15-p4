@@ -152,15 +152,41 @@ Route::post('/library', function()
 	// post updates to the library (songs database)
 });
 
-Route::get('/playlists', function()
-{
-	// return playlist details for page
-});
+Route::get('/playlists', 
+	array
+	(
+		'before' => 'auth',
+		function()
+		{
+			$playlists = Playlist::where('user_id', '=', Auth::id());
 
-Route::post('/playlist', function()
+			return Response::json($playlists);
+		}
+	)
+);
+
+Route::post('/edit-playlist', function()
 {
 	// post changes to playlist name or create new playlist
 });
+
+Route::post('/new-playlist', 
+	array
+	(
+		'before' => 'auth',
+		function()
+		{
+			$name = Input::get('plistName');
+
+			$plist = new Playlist();
+			$plist->name = $name;
+			$plist->user_id = Auth::id();
+			$plist->save();
+
+			return Response::make($plist->id, 200);
+		}
+	)
+);
 
 Route::get('/playlist-items/{pid}', 
 	array
@@ -192,6 +218,38 @@ Route::post('/new-playlist-item', function()
 
 	return Response::make('song added', 200);
 });
+
+Route::post('/delete', 
+	array
+	(
+		'before'=>'auth',
+		function()
+		{
+			$delType = Input::get('type');
+			$delId = Input::get('id');
+
+			if ($delType == 'song')
+			{
+				PlaylistItem::where('song_id', '=', $delId)->delete();
+				$song = Song::find($delId);
+				$filePath = substr($song->file_path,2);
+				File::delete($filePath);
+				$song->delete();
+			}
+			elseif ($delType == 'playlist')
+			{
+				PlaylistItem::where('playlist_id', '=', $delId)->delete();
+				Playlist::find($delId)->delete();
+			}
+			elseif ($delType == 'playlistItem')
+			{
+				PlaylistItem::find($delId)->delete();
+			}
+
+			return Response::make('deleted ' . $delType . ': ' . $delId, 200);
+		}
+	)
+);
 
 Route::post('upload',
 	array
@@ -260,7 +318,7 @@ Route::post('upload',
 
 App::missing(function($exception)
 {
-	// return 404 error page
+	return response('Page not found', 404);
 });
 
 function getTag($fileInfoArray, $tagName, $altValue)

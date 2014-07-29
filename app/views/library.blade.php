@@ -24,9 +24,14 @@
 		<h5>PLAYLISTS</h5>
 		<ul id="playlists" class="playlists">
 			@foreach($playlists as $plist)
-				<li id="pid{{$plist->id}}">{{$plist->name}}</li>
+				<li id="pid{{$plist->id}}" class="songRow">{{$plist->name}}</li>
 			@endforeach
 		</ul>
+
+		<form id="playlistForm">
+			<input type="text" name="plistName" id="plistName" /><br />
+			<input type="submit" name="submit" value="Create!" />
+		</form>
 	</div>
 
 	<div id="dropArea">
@@ -65,6 +70,7 @@
 	</div>
 
 	<div id="footer" class="gradient">
-		<h5>footer here</h5>
+		<div id="createPlaylist"><img src="./images/add-list.png" /></div>
+		<div id="trash"><img src="./images/trash.png" /></div>
 	</div>
 @stop

@@ -1,7 +1,7 @@
 @extends('_master')
 
 @section('title')
-	Log In
+	MOML - Log In
 @stop
 
 @section('body')
