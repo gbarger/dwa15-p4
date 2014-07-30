@@ -12,7 +12,7 @@ ul li
 	 * Light gray: #C3C3C1;
 	 * Dark grey: #A4A2A3;
 	 */
-	background-image: -webkit-gradient(
+	/*background-image: -webkit-gradient(
 		linear,
 		left top,
 		left bottom,
@@ -24,7 +24,9 @@ ul li
 	background-image: -moz-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
 	background-image: -webkit-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
 	background-image: -ms-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
-	background-image: linear-gradient(to bottom, #EAEAE8 11%, #C3C3C1 94%);
+	background-image: linear-gradient(to bottom, #EAEAE8 11%, #C3C3C1 94%);*/
+
+	background-color: #EEEEEE;
 }
 #nav
 {

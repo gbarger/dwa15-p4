@@ -1,5 +1,17 @@
+#nav
+{
+	padding: 10px 10px 0 10px;
+}
+
 .dropzone
 {
 	position: static;
 	width: 100%;
+}
+
+#jp_container_1
+{
+	margin: 0 auto;
+	border: none;
+	background-color: transparent;
 }
