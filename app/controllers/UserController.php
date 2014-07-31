@@ -1,99 +1,85 @@
 <?php
 
-class UserController extends \BaseController {
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
-	public function getLogin()
+class UserController extends \BaseController 
+{
+	public function getUserLogin()
 	{
 		return View::make('login');
 	}
 
-	public function login()
+	public function postUserLogin()
 	{
+		$cred = Input::only('email','password');
+		$rem = Input::get('remember');
 
+		if (Auth::attempt($cred, $remember = $rem))
+		{
+			return Redirect::intended('/library');
+		}
+		else
+		{
+			$errors = array();
+			$errors[] = 'Your login attempt was incorrect';
+
+			return Redirect::to('/login')->with('errors', $errors);
+		}
 	}
 
-	public function logout()
+	public function getUserLogout()
 	{
-		
+		Auth::logout();
+
+		return Redirect::to('/');
+	}
+
+	public function getUserSignup()
+	{
+		return View::make('signup');
+	}
+
+	public function postUserSignup()
+	{
+		$errors = array();
+		$em = Input::get('email');
+		$pw = Input::get('password');
+		$pw2 = Input::get('confirm');
+		$rem = Input::get('remember');
+
+		if ($em == '')
+			$errors[] = 'Email must not be blank.';
+
+		if ($pw == '')
+			$errors[] = 'Password must not be blank.';
+
+		if ($pw2 == '')
+			$errors[] = 'Password confirmation must be completed.';
+
+		if ($pw != $pw2)
+			$errors[] = 'Password and confirmation must match.';
+
+		if (count($errors) > 0)
+		{
+			return View::make('signup')->with('errors', $errors);
+		}
+		else
+		{
+			$user = new User;
+			$user->email = $em;
+			$user->password = Hash::make($pw);
+
+			try
+			{
+				$user->save();
+			}
+			catch(Exception $e)
+			{
+				$errors = array('There was an error saving the user: ' . $e);
+				return View::make('signup')->with('errors', $errors);
+			}
+
+			Auth::login($user, $remember = $rem);
+
+			return View::make('/library');
+		}
 	}
 }

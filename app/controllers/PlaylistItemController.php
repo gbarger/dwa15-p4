@@ -1,86 +1,29 @@
 <?php
 
-class PlaylistItemController extends \BaseController {
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+class PlaylistItemController extends \BaseController
+{
+	public function postNewPlaylistItem()
 	{
-		//
+		$songId = Input::get('sid');
+		$playlistId = Input::get('pid');
+
+		$lastSong = PlaylistItem::where('playlist_id','=',$playlistId)->orderBy('order','desc')->get()->first();
+
+		$newItem = new PlaylistItem();
+		$newItem->song_id = $songId;
+		$newItem->playlist_id = $playlistId;
+		$newItem->order = $lastSong['attributes']['order'] + 1;
+		$newItem->save();
+
+		return Response::make('song added', 200);
 	}
 
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
+	public function getPlaylistItems($pid)
 	{
-		//
+		$uid = Auth::id();
+
+		$songs = PlaylistItem::with('song')->where('playlist_id', '=', $pid)->orderBy('order')->get();
+
+		return Response::json($songs);
 	}
-
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
-
 }
