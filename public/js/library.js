@@ -1,7 +1,11 @@
 var listType = 0;
+var playlistItems = new Array();
+var jplayerLoaded = false;
 
 $(document).ready(function()
 {
+	jPlayerLoaded = false;
+
 	$('#libLink').on('click',function()
 	{
 		listType = 0;
@@ -80,13 +84,14 @@ function droppable()
 				{
 					url: './new-playlist-item',
 					type: 'POST',
-					data: {sid: dropId, pid: playlistId, type: dropType},
+					data: {dropped: dropId, pid: playlistId, type: dropType},
 					success: function(data)
 					{
 						refreshLibrary();
 					}
 				});
-			}
+			},
+			tolerance: 'touch'
 		})
 	});
 
@@ -127,7 +132,8 @@ function droppable()
 			$('#' + draggedItem).remove();
 
 			redrawScreen();
-		}
+		},
+		tolerance: 'touch'
 	});
 }
 
@@ -135,14 +141,10 @@ function clickable()
 {
 	$('.playRow').on('click', function() 
 	{
-		var songpath = $(this).attr('id');
-		var songs = [
-			{title:'test',mp3:songpath},
-			{title:'test2',mp3:songpath},
-			{title:'test3',mp3:songpath}
-		];
+		var songPath = $(this).attr('id');
 
-		buildPlayer(songs);
+		var thisSong = {mp3:songPath};
+		buildPlayer(thisSong);
 	});
 }
 
@@ -190,9 +192,15 @@ function refreshPlaylist(playlistId)
 		success: function(data)
 		{
 			var tableData = '';
+			playlistItems = new Array();
 
 			for (var i = 0; i < data.length; i++)
 			{
+				if (typeof data[i].song.file_path === 'undefined')
+					continue;
+
+				playlistItems.push({mp3:data[i].song.file_path});
+
 				tableData += '<tr>' + 
 					'<td class="playRow" id="' + data[i].song.file_path + '"><img src="./images/play-icon.png" /></td>' + 
 					'<td class="songRow" id="iid' + data[i].id + '">' + data[i].song.title + '</td>' + 
@@ -211,6 +219,7 @@ function refreshPlaylist(playlistId)
 
 			draggable();
 			clickable();
+			buildPlayer(playlistItems);
 		}
 	});
 }
@@ -224,9 +233,12 @@ function refreshLibrary()
 		success: function(data)
 		{
 			var tableData = '';
+			playlistItems = new Array();
 
 			for (var i = 0; i < data.length; i++)
 			{
+				playlistItems.push({mp3:data[i].file_path});
+
 				tableData += '<tr>' + 
 					'<td class="playRow" id="' + data[i].file_path + '"><img src="./images/play-icon.png" /></td>' + 
 					'<td class="songRow" id="sid' + data[i].id + '" >' + data[i].title + '</td>' + 
@@ -245,6 +257,7 @@ function refreshLibrary()
 
 			draggable();
 			clickable();
+			buildPlayer(playlistItems);
 		}
 	});
 }
@@ -257,36 +270,34 @@ function redrawScreen()
 	else if (listType != -1)
 		refreshPlaylist(listType);
 
-	refreshPlaylistMenu
 	makePlaylistsClickable();
 
 	draggable();
 	droppable();
-
-	buildPlayer();
 }
 
 function buildPlayer(songList)
 {
-	if (songList != null && songList.length > 0)
+	if (jPlayerLoaded)
 	{
-		var songAlert = '';
-		for (var i = 0; i < songList.length; i++)
-			songAlert += songList[i].title + ': ' + songList[i].mp3 + ' ';
-
-		alert(songList[0].mp3);
+		$('#jquery_jplayer_1').jPlayer("setMedia",songList).jPlayer('play');
 	}
+	else
+	{
+		new jPlayerPlaylist({
+			jPlayer: "#jquery_jplayer_1",
+			cssSelectorAncestor: "#jp_container_1"
+		},
+		songList
+		, {
+			playlistOptions: {autoPlay: true},
+			swfPath: "js",
+			supplied: "mp3",
+			wmode: "window",
+			smoothPlayBar: true,
+			keyEnabled: true
+		});
 
-	new jPlayerPlaylist({
-		jPlayer: "#jquery_jplayer_1",
-		cssSelectorAncestor: "#jp_container_1"
-	},
-	songList
-	, {
-		swfPath: "js",
-		supplied: "mp3",
-		wmode: "window",
-		smoothPlayBar: true,
-		keyEnabled: true
-	});
+		jPlayerLoaded = true;
+	}
 }

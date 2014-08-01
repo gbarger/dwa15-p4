@@ -23,7 +23,7 @@ class SongController extends \BaseController
 
 	public function postSongUpload()
 	{
-		$allowExt = array('mp3','ogg','m4a');
+		$allowExt = array('mp3');
 		$file = Input::file('file');
 		$filename = $file->getClientOriginalName();
 		$extension = $file->getClientOriginalExtension();
@@ -79,44 +79,44 @@ class SongController extends \BaseController
 			return Response::make('File type not allowed: ' . $extension, 415);
 		}
 	}
+}
 
-	function getTag($fileInfoArray, $tagName, $altValue)
+function getTag($fileInfoArray, $tagName, $altValue)
+{
+	$tagValue = '';
+
+	if (array_key_exists('tags', $fileInfoArray))
 	{
-		$tagValue = '';
+		$tags = array();
+		$tags2 = array();
 
-		if (array_key_exists('tags', $fileInfoArray))
+		if (array_key_exists('id3v1', $fileInfoArray['tags']))
+			$tags = $fileInfoArray['tags']['id3v1'];
+
+		if (array_key_exists('id3v2', $fileInfoArray['tags']))
+			$tags2 = $fileInfoArray['tags']['id3v2'];
+
+		if (count($tags2) > 0 && 
+			array_key_exists($tagName, $tags2) && 
+			array_key_exists(0, $tags2[$tagName]) && 
+			$tags2[$tagName][0] != NULL && $tags2[$tagName][0] != '')
 		{
-			$tags = array();
-			$tags2 = array();
+			$tagValue = $tags2[$tagName][0];
+		}
 
-			if (array_key_exists('id3v1', $fileInfoArray['tags']))
-				$tags = $fileInfoArray['tags']['id3v1'];
-
-			if (array_key_exists('id3v2', $fileInfoArray['tags']))
-				$tags2 = $fileInfoArray['tags']['id3v2'];
-
-			if (count($tags2) > 0 && 
-				array_key_exists($tagName, $tags2) && 
-				array_key_exists(0, $tags2[$tagName]) && 
-				$tags2[$tagName][0] != NULL && $tags2[$tagName][0] != '')
-			{
-				$tagValue = $tags2[$tagName][0];
-			}
-
-			if ($tagValue == '' && count($tags) > 0 && 
-				array_key_exists($tagName, $tags) && 
-				array_key_exists(0, $tags[$tagName]) && 
-				$tags[$tagName][0] != NULL && $tags[$tagName][0] != '')
-			{
-				$tagValue = $tags[$tagName][0];
-			}
-			
-			if ($tagValue == '' && $altValue != NULL && $altValue != '')
-			{
-				$tagValue = $altValue;
-			}
+		if ($tagValue == '' && count($tags) > 0 && 
+			array_key_exists($tagName, $tags) && 
+			array_key_exists(0, $tags[$tagName]) && 
+			$tags[$tagName][0] != NULL && $tags[$tagName][0] != '')
+		{
+			$tagValue = $tags[$tagName][0];
 		}
 		
-		return $tagValue;
+		if ($tagValue == '' && $altValue != NULL && $altValue != '')
+		{
+			$tagValue = $altValue;
+		}
 	}
+	
+	return $tagValue;
 }

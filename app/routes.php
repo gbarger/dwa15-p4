@@ -47,7 +47,7 @@ Route::post('/delete', array('before' => 'auth', 'uses' => 'CrossObjectControlle
 
 Route::post('/upload', array('before'=>'auth', 'uses' => 'SongController@postSongUpload'));
 
-App::error(function($exception)
+/*App::error(function($exception)
 {
 	return Response::make('404 Page not found', 404);
-});
+});*/

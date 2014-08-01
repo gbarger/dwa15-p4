@@ -1,10 +1,16 @@
 h5
 {
-	margin: 0;
+	margin: 15px 0 0 0;
+}
+ul
+{
+	padding: 0;
+	margin: 5px 5px 0 10px;
 }
 ul li
 {
 	list-style-type: none;
+	padding: 2px 0;
 }
 .gradient
 {
@@ -39,12 +45,16 @@ ul li
 	height: 22px;
 	clear: both;
 }
-/*#createPlaylist
+#createPlaylist
 {
 	float: left;
 	cursor: pointer;
+	width:22px;
+	margin: 1px;
 }
 #trash
 {
 	float: left;
-}*/
+	width: 22px;
+	margin: 1px;
+}

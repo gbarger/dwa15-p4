@@ -61,8 +61,8 @@
 	<div id="nav">
 		<h5>LIBRARY</h5>
 		<ul>
-			<li id="libLink">Music</li>
-			<li id="addLink">Add Music</li>
+			<li id="libLink"><img src="./images/music.png" />Music</li>
+			<li id="addLink"><img src="./images/upload.png" />Upload</li>
 		</ul>
 
 		<h5>PLAYLISTS</h5>

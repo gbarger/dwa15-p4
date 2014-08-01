@@ -1,6 +1,6 @@
 <?php
 
-class PlaylistController extends \BaseController
+class CrossObjectController extends \BaseController
 {
 	public function postDelete()
 	{

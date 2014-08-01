@@ -49,7 +49,7 @@ class SongTableSeeder extends Seeder
 		$song->artist = 'Brad Sucks';
 		$song->year = 2014;
 		$song->track = 1;
-		$song->genre = 'Opera';
+		$song->genre = 'Rock';
 		$song->save();
 
 		$song2 = new Song;
@@ -59,8 +59,8 @@ class SongTableSeeder extends Seeder
 		$song2->title = 'Come Back';
 		$song2->artist = 'Brad Sucks';
 		$song2->year = 2014;
-		$song2->track = 1;
-		$song2->genre = 'Opera';
+		$song2->track = 2;
+		$song2->genre = 'Rock';
 		$song2->save();
 
 		$song3 = new Song;
@@ -70,8 +70,8 @@ class SongTableSeeder extends Seeder
 		$song3->title = 'Recital - German';
 		$song3->artist = 'Brad Sucks';
 		$song3->year = 2014;
-		$song3->track = 1;
-		$song3->genre = 'Opera';
+		$song3->track = 3;
+		$song3->genre = 'Rock';
 		$song3->save();
 
 		$song3 = new Song;
@@ -81,8 +81,8 @@ class SongTableSeeder extends Seeder
 		$song3->title = 'Recital - Italian';
 		$song3->artist = 'Brad Sucks';
 		$song3->year = 2014;
-		$song3->track = 1;
-		$song3->genre = 'Opera';
+		$song3->track = 4;
+		$song3->genre = 'Rock';
 		$song3->save();
 	}
 }
