@@ -62,7 +62,7 @@
 		<h5>LIBRARY</h5>
 		<ul>
 			<li id="libLink"><img src="./images/music.png" />Music</li>
-			<li id="addLink"><img src="./images/upload.png" />Upload</li>
+			<li id="addLink"><img src="./images/add.png" />Upload</li>
 		</ul>
 
 		<h5>PLAYLISTS</h5>
@@ -105,7 +105,7 @@
 	</div>
 
 	<div id="footer" class="gradient">
-		<div id="createPlaylist"><img src="./images/add-list.png" /></div>
+		<div id="createPlaylist"><img src="./images/add.png" /></div>
 		<div id="trash"><img src="./images/trash.png" /></div>
 	</div>
 @stop

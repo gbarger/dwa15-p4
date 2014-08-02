@@ -10,8 +10,6 @@ class PlaylistItemController extends \BaseController
 
 		$lastSong = PlaylistItem::where('playlist_id','=',$playlistId)->orderBy('order','desc')->get()->first();
 
-		
-
 		if ($dropType == 'sid')
 		{
 			$newItem = new PlaylistItem();

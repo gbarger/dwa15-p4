@@ -32,10 +32,7 @@ Route::post('/library', function()
 
 Route::get('/playlists', array('before' => 'auth','PlaylistController@getPlaylists'));
 
-Route::post('/edit-playlist', function()
-{
-	// post changes to playlist name or create new playlist
-});
+Route::post('/edit-playlist', 'PlaylistController@postEditPlaylist');
 
 Route::post('/new-playlist', array('before' => 'auth', 'uses' => 'PlaylistController@postNewPlaylist'));
 
@@ -47,7 +44,7 @@ Route::post('/delete', array('before' => 'auth', 'uses' => 'CrossObjectControlle
 
 Route::post('/upload', array('before'=>'auth', 'uses' => 'SongController@postSongUpload'));
 
-/*App::error(function($exception)
+App::error(function($exception)
 {
-	return Response::make('404 Page not found', 404);
-});*/
+	return Response::view('error', array(), 404);
+});

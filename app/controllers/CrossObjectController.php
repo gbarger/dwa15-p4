@@ -27,9 +27,4 @@ class CrossObjectController extends \BaseController
 
 		return Response::make('deleted ' . $delType . ': ' . $delId, 200);
 	}
-
-	public function getErrorPage($exception)
-	{
-		return Response::make('404 Page not found', 404);
-	}
 }

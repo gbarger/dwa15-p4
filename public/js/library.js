@@ -1,6 +1,7 @@
 var listType = 0;
 var playlistItems = new Array();
 var jplayerLoaded = false;
+var myPlayer = null;
 
 $(document).ready(function()
 {
@@ -95,7 +96,8 @@ function droppable()
 		})
 	});
 
-	$('#trash').droppable({
+	$('#trash').droppable(
+	{
 		drop: function(event, ui)
 		{
 			var draggedItem = ui.draggable.attr('id');
@@ -143,7 +145,7 @@ function clickable()
 	{
 		var songPath = $(this).attr('id');
 
-		var thisSong = {mp3:songPath};
+		var thisSong = [{mp3:songPath}];
 		buildPlayer(thisSong);
 	});
 }
@@ -154,9 +156,40 @@ function makePlaylistsClickable()
 	{
 		var pid = value.id.substr(3);
 
+		// display the playlist in the table
 		$(this).on('click',function()
 		{
 			refreshPlaylist(pid);
+		});
+
+		// enable inline editing of playlist name
+		$(this).on('dblclick', function()
+		{
+			var thisValue = $(this).html();
+
+			var thisForm = '<form><input class="inline-edit" type="text" value="' + thisValue + 
+				'" /><input type="submit" name="submit" value="save" /></form>';
+
+			$(this).html(thisForm);
+			$(this).unbind('dblclick');
+
+			$(this).on('submit', function()
+			{
+				var newVal = $('.inline-edit').val();
+				$(this).html(newVal);
+				event.preventDefault();
+
+				$.ajax(
+				{
+					url: './edit-playlist',
+					type: 'POST',
+					data: {pid: pid, newValue: newVal},
+					success: function(data)
+					{
+						refreshPlayListMenu();
+					}
+				});
+			});
 		});
 	});
 }
@@ -177,6 +210,8 @@ function refreshPlaylistMenu()
 			}
 
 			$('#playlists').html(liData);
+
+			makePlaylistsClickable();
 		}
 	});
 }
@@ -276,20 +311,21 @@ function redrawScreen()
 	droppable();
 }
 
-function buildPlayer(songList)
+function buildPlayer(playList)
 {
 	if (jPlayerLoaded)
 	{
-		$('#jquery_jplayer_1').jPlayer("setMedia",songList).jPlayer('play');
+		myPlayer.setPlaylist(playList);
+		myPlayer.play(0);
 	}
 	else
 	{
-		new jPlayerPlaylist({
+		myPlayer = new jPlayerPlaylist({
 			jPlayer: "#jquery_jplayer_1",
 			cssSelectorAncestor: "#jp_container_1"
 		},
-		songList
-		, {
+		playList
+		,{
 			playlistOptions: {autoPlay: true},
 			swfPath: "js",
 			supplied: "mp3",
