@@ -1,3 +1,14 @@
+#searchDiv
+{
+	float: right;
+	margin-right: 15px;
+	margin-top: 5px;
+}
+#searchBox
+{
+	border-radius: 5px;
+	padding-left: 5px;
+}
 h5
 {
 	margin: 15px 0 0 0;
@@ -14,24 +25,6 @@ ul li
 }
 .gradient
 {
-	/*
-	 * Light gray: #C3C3C1;
-	 * Dark grey: #A4A2A3;
-	 */
-	/*background-image: -webkit-gradient(
-		linear,
-		left top,
-		left bottom,
-		color-stop(0.11, #EAEAE8),
-		color-stop(0.94, #C3C3C1)
-	);
-
-	background-image: -o-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
-	background-image: -moz-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
-	background-image: -webkit-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
-	background-image: -ms-linear-gradient(bottom, #EAEAE8 11%, #C3C3C1 94%);
-	background-image: linear-gradient(to bottom, #EAEAE8 11%, #C3C3C1 94%);*/
-
 	background-color: #EEEEEE;
 }
 #nav

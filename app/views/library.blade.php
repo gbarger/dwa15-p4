@@ -14,7 +14,12 @@
 	<link rel="stylesheet" type="text/css" href="./css/library.css" />
 
 	<div id="controls" class="gradient">
-		<h5>My Online Muic Library</h5>
+		<div id="searchDiv">
+			<form id="searchForm">
+				<input type="text" name="search" id="searchBox" />
+			</form>
+		</div>
+
 		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 
 		<div id="jp_container_1" class="jp-audio">

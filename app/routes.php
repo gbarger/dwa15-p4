@@ -30,7 +30,8 @@ Route::post('/library', function()
 	// post updates to the library (songs database)
 });
 
-Route::get('/playlists', array('before' => 'auth','PlaylistController@getPlaylists'));
+// Route::get('/playlists', array('before' => 'auth', 'PlaylistController@getPlaylists'));
+Route::get('/playlists', 'PlaylistController@getPlaylists');
 
 Route::post('/edit-playlist', 'PlaylistController@postEditPlaylist');
 
@@ -42,9 +43,9 @@ Route::post('/new-playlist-item', 'PlaylistItemController@postNewPlaylistItem');
 
 Route::post('/delete', array('before' => 'auth', 'uses' => 'CrossObjectController@postDelete'));
 
-Route::post('/upload', array('before'=>'auth', 'uses' => 'SongController@postSongUpload'));
+Route::post('/upload', array('before' => 'auth', 'uses' => 'SongController@postSongUpload'));
 
-App::error(function($exception)
+/*App::error(function($exception)
 {
 	return Response::view('error', array(), 404);
-});
+});*/

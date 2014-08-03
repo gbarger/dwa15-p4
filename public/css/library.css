@@ -2,16 +2,33 @@
 {
 	padding: 10px 10px 0 10px;
 }
-
 .dropzone
 {
 	position: static;
 	width: 100%;
 }
-
 #jp_container_1
 {
 	margin: 0 auto;
 	border: none;
 	background-color: transparent;
+}
+table
+{
+	border-collapse: collapse;
+	margin: 10px 10px 10px 10px;
+}
+td, th
+{
+	border-right: 1px solid #dadada;
+	border-left: 1px solid #dadada;
+	padding: 2px 5px;
+}
+th
+{
+	background-color: #eeeeee;
+}
+tbody tr:nth-child(even)
+{
+	background-color: #b5d0f1;
 }

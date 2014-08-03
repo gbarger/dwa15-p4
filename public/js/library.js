@@ -58,6 +58,21 @@ $(document).ready(function()
 		event.preventDefault();
 	});
 
+	$('#searchBox').on('keyup', function()
+	{
+		var searchVal = $(this).val().toLowerCase();
+		
+		$('#songList tr').each(function()
+		{
+			var rowText = $(this).text().toLowerCase();
+
+			if (rowText.indexOf(searchVal) == -1)
+				$(this).hide();
+			else
+				$(this).show();
+		});
+	});
+
 	redrawScreen();
 });
 
@@ -89,6 +104,8 @@ function droppable()
 					success: function(data)
 					{
 						refreshLibrary();
+						refreshPlaylistMenu();
+						makePlaylistsClickable();
 					}
 				});
 			},

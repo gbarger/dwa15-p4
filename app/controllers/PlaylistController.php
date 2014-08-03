@@ -4,7 +4,7 @@ class PlaylistController extends \BaseController
 {
 	public function getPlaylists()
 	{
-		$playlists = Playlist::where('user_id', '=', Auth::id())->orderBy('name','asc')->get();
+		$playlists = Playlist::where('user_id', '=', Auth::id())->get();
 
 		return Response::json($playlists);
 	}

@@ -1,7 +1,7 @@
 @extends('_master')
 
 @section('title')
-	MOML - Library
+	MOML - Nope 404
 @stop
 
 @section('body')

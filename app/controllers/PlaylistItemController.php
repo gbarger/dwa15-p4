@@ -9,12 +9,13 @@ class PlaylistItemController extends \BaseController
 		$dropType = Input::get('type');
 
 		$lastSong = PlaylistItem::where('playlist_id','=',$playlistId)->orderBy('order','desc')->get()->first();
+		$orderValue = $lastSong['attributes']['order'] + 1;
 
 		if ($dropType == 'sid')
 		{
 			$newItem = new PlaylistItem();
 			$newItem->playlist_id = $playlistId;
-			$newItem->order = $lastSong['attributes']['order'] + 1;
+			$newItem->order = $orderValue;
 			$newItem->song_id = $dropId;
 			$newItem->save();
 		}
@@ -22,8 +23,23 @@ class PlaylistItemController extends \BaseController
 		{
 			$updateItem = PlaylistItem::find($dropId);
 			$updateItem->playlist_id = $playlistId;
-			$updateItem->order = $lastSong['attributes']['order'] + 1;
+			$updateItem->order = $orderValue;
 			$updateItem->save();
+		}
+		elseif ($dropType == 'pid')
+		{
+			$moveItems = PlaylistItem::where('playlist_id', '=', $dropId)->orderBy('order')->get();
+
+			foreach ($moveItems as $pi)
+			{
+				$pi->playlist_id = $playlistId;
+				$pi->order = $orderValue;
+				$pi->save();
+
+				$orderValue++;
+			}
+
+			$plist = Playlist::where('id', '=', $dropId)->delete();
 		}
 		else
 		{
