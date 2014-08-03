@@ -14,7 +14,7 @@
 ************
 jQuery from google cdn
 dropzone: http://www.dropzonejs.com/
-music from: http://www.bradsucks.net/
+music from: http://www.bradsucks.net/ and http://freemusicarchive.org/curator/creative_commons/
 get id3 from: https://packagist.org/packages/nass600/get-id3
 stylization from old veresion of itunes
 player: http://jplayer.org/

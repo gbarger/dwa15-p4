@@ -294,18 +294,51 @@ function refreshLibrary()
 
 				tableData += '<tr>' + 
 					'<td class="playRow" id="' + data[i].file_path + '"><img src="./images/play-icon.png" /></td>' + 
-					'<td class="songRow" id="sid' + data[i].id + '" >' + data[i].title + '</td>' + 
-					'<td>' + data[i].artist + '</td>' + 
-					'<td>' + data[i].album + '</td>' + 
-					'<td>' + data[i].year + '</td>' + 
-					'<td>' + data[i].track + '</td>' + 
-					'<td>' + data[i].genre + '</td>' + 
+					'<td class="songRow title" id="sid' + data[i].id + '" >' + data[i].title + '</td>' + 
+					'<td class="artist" >' + data[i].artist + '</td>' + 
+					'<td class="album" >' + data[i].album + '</td>' + 
+					'<td class="year" >' + data[i].year + '</td>' + 
+					'<td class="track" >' + data[i].track + '</td>' + 
+					'<td class="genre" >' + data[i].genre + '</td>' + 
 					'</tr>';
 			}
 
 			$('#songList').html(tableData);
 			$('#content table').tablesorter();
 
+			$('#songList td').each(function()
+			{
+				$(this).on('dblclick', function()
+				{
+					var thisValue = $(this).html();
+					var thisType = $(this).attr('class');
+					var songId = $(this).parent().children(':nth-child(2)').attr('id').substr(3);
+
+					var thisForm = '<form><input class="inline-edit" type="text" value="' + thisValue + 
+						'" /><input type="submit" name="submit" value="save" /></form>';
+
+					$(this).html(thisForm);
+					$(this).unbind('dblclick');
+
+					$(this).on('submit', function()
+					{
+						var newVal = $('.inline-edit').val();
+						$(this).html(newVal);
+						event.preventDefault();
+
+						$.ajax(
+						{
+							url: './update-song',
+							type: 'POST',
+							data: {sid: songId, type: thisType, newValue: newVal},
+							success: function(data)
+							{
+								refreshLibrary();
+							}
+						});
+					});
+				});
+			});
 			$('#dropArea').hide();
 			$('#content').show();
 

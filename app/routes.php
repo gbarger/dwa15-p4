@@ -29,6 +29,8 @@ Route::post('/update-profile', array('before' => 'csrf', 'uses' => 'UserControll
 
 Route::get('/library/{format?}', array('before' => 'auth', 'uses' => 'SongController@getLibrary'));
 
+Route::post('/update-song', 'SongController@postSongUpdate');
+
 Route::get('/playlists', 'PlaylistController@getPlaylists');
 
 Route::post('/edit-playlist', 'PlaylistController@postEditPlaylist');

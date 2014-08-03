@@ -79,6 +79,32 @@ class SongController extends \BaseController
 			return Response::make('File type not allowed: ' . $extension, 415);
 		}
 	}
+
+	public function postSongUpdate()
+	{
+		$song = Song::find(Input::get('sid'));
+		$type = Input::get('type');
+		$newValue = Input::get('newValue');
+
+		if (strpos($type,'title') !== FALSE)
+			$song->title = $newValue;
+		elseif (strpos($type,'artist') !== FALSE)
+			$song->artist = $newValue;
+		elseif (strpos($type, 'album') !== FALSE)
+			$song->album = $newValue;
+		elseif (strpos($type, 'year') !== FALSE)
+			$song->year = $newValue;
+		elseif (strpos($type, 'track') !== FALSE)
+			$song->track = $newValue;
+		elseif (strpos($type, 'genre') !== FALSE)
+			$song->genre = $newValue;
+
+		$song->save();
+
+		print_r(Input::all());
+
+		Response::make('successfully updated song: ' + $song->id, 200);
+	}
 }
 
 function getTag($fileInfoArray, $tagName, $altValue)

@@ -36,6 +36,7 @@ ul li
 	min-height: 400px;
 	background-color: #D4D8E3;
 	float: left;
+	padding: 10px 10px 0 10px;
 }
 #footer
 {
@@ -54,4 +55,68 @@ ul li
 	float: left;
 	width: 22px;
 	margin: 1px;
+}
+.dropzone
+{
+	position: static;
+	width: 100%;
+}
+#jp_container_1
+{
+	margin: 0 auto;
+	border: none;
+	background-color: transparent;
+}
+table
+{
+	border-collapse: collapse;
+	margin: 10px 10px 10px 10px;
+}
+td, th
+{
+	border-right: 1px solid #dadada;
+	border-left: 1px solid #dadada;
+	padding: 2px 5px;
+}
+th
+{
+	background-color: #eeeeee;
+	padding-right: 22px;
+	background: url("../images/bg.gif") #eeeeee right center no-repeat;
+}
+th.headerSortUp
+{
+    background: url("../images/asc.gif") #D4D8E3 right center no-repeat;
+}
+th.headerSortDown
+{
+    background: url("../images/desc.gif") #D4D8E3 right center no-repeat;
+}
+tbody tr:nth-child(even)
+{
+	background-color: #b5d0f1;
+}
+#userActions
+{
+	margin-left: 15px;
+	margin-top: 5px;
+	float: left;
+}
+#userActions a
+{
+	color: #1E1E1C;
+	font-weight: bold;
+}
+#searchDiv
+{
+	float: right;
+	margin-right: 15px;
+	margin-top: 5px;
+}
+#searchBox
+{
+	border-radius: 5px;
+	padding-left: 21px;
+	background: url('../images/search.png') no-repeat;
+	background-color: white;
 }

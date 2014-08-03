@@ -10,9 +10,6 @@
 	<script src="./js/dropzone.js"></script>
 	<script src="./js/jquery.jplayer.min.js"></script>
 	<script src="./js/jplayer.playlist.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="./css/dropzone.css" />
-	<link rel="stylesheet" type="text/css" href="./css/player-skins/blue.monday/jplayer.blue.monday.css" />
-	<link rel="stylesheet" type="text/css" href="./css/library.css" />
 
 	<div id="controls" class="gradient">
 		<div id="userActions">
