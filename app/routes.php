@@ -23,14 +23,12 @@ Route::get('/signup', array('before' => 'guest', 'uses' => 'UserController@getUs
 
 Route::post('/signup', array('before' => 'csrf', 'uses' => 'UserController@postUserSignup'));
 
+Route::get('/update-profile', array('before' => 'auth', 'uses' => 'UserController@getUpdateProfile'));
+
+Route::post('/update-profile', array('before' => 'csrf', 'uses' => 'UserController@postUpdateProfile'));
+
 Route::get('/library/{format?}', array('before' => 'auth', 'uses' => 'SongController@getLibrary'));
 
-Route::post('/library', function()
-{
-	// post updates to the library (songs database)
-});
-
-// Route::get('/playlists', array('before' => 'auth', 'PlaylistController@getPlaylists'));
 Route::get('/playlists', 'PlaylistController@getPlaylists');
 
 Route::post('/edit-playlist', 'PlaylistController@postEditPlaylist');
@@ -45,7 +43,7 @@ Route::post('/delete', array('before' => 'auth', 'uses' => 'CrossObjectControlle
 
 Route::post('/upload', array('before' => 'auth', 'uses' => 'SongController@postSongUpload'));
 
-/*App::error(function($exception)
+App::error(function($exception)
 {
 	return Response::view('error', array(), 404);
-});*/
+});

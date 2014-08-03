@@ -265,6 +265,7 @@ function refreshPlaylist(playlistId)
 			}
 
 			$('#songList').html(tableData);
+			$('#content table').tablesorter();
 
 			$('#dropArea').hide();
 			$('#content').show();
@@ -303,6 +304,7 @@ function refreshLibrary()
 			}
 
 			$('#songList').html(tableData);
+			$('#content table').tablesorter();
 
 			$('#dropArea').hide();
 			$('#content').show();

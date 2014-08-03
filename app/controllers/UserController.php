@@ -67,17 +67,51 @@ class UserController extends \BaseController
 			$user->email = $em;
 			$user->password = Hash::make($pw);
 
-			try
-			{
-				$user->save();
-			}
-			catch(Exception $e)
-			{
-				$errors = array('There was an error saving the user: ' . $e);
-				return View::make('signup')->with('errors', $errors);
-			}
+			$user->save();
 
 			Auth::login($user, $remember = $rem);
+
+			return View::make('/library');
+		}
+	}
+
+	public function getUpdateProfile()
+	{
+		$uid = Auth::id();
+		$user = User::find($uid);
+
+		return View::make('/updateProfile')
+			->with('email', $user->email);
+	}
+
+	public function postUpdateProfile()
+	{
+		$errors = array();
+		$email = Input::get('email');
+		$newPass = Input::get('newPassword');
+		$confirmPass = Input::get('confirm');
+
+		if ($email == '')
+			$errors[] = 'Email must not be blank.';
+
+		if ($newPass != '' && $newPass != null && $newPass != $confirmPass)
+			$errors[] = 'The password and confirmation must match';
+
+		if (count($errors) > 0)
+		{
+			return View::make('/updateProfile')
+				->with('email', $email)
+				->with('errors', $errors);
+		}
+		else
+		{
+			$user = User::find(Auth::id());
+			$user->email = $email;
+
+			if ($newPass != null && $newPass != '')
+				$user->password = Hash::make($newPass);
+
+			$user->save();
 
 			return View::make('/library');
 		}

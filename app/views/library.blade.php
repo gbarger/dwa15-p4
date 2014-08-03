@@ -5,6 +5,7 @@
 @stop
 
 @section('body')
+	<script src="./js/jquery.tablesorter.min.js"></script>
 	<script src="./js/library.js"></script>
 	<script src="./js/dropzone.js"></script>
 	<script src="./js/jquery.jplayer.min.js"></script>
@@ -14,6 +15,11 @@
 	<link rel="stylesheet" type="text/css" href="./css/library.css" />
 
 	<div id="controls" class="gradient">
+		<div id="userActions">
+			<a href="./logout">Sign Out</a> | 
+			<a href="./update-profile">Update Profile</a>
+		</div>
+
 		<div id="searchDiv">
 			<form id="searchForm">
 				<input type="text" name="search" id="searchBox" />
@@ -72,9 +78,6 @@
 
 		<h5>PLAYLISTS</h5>
 		<ul id="playlists" class="playlists">
-			@foreach($playlists as $plist)
-				<li id="pid{{$plist->id}}" class="songRow">{{$plist->name}}</li>
-			@endforeach
 		</ul>
 
 		<form id="playlistForm">

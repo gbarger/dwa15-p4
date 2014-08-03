@@ -19,3 +19,4 @@ get id3 from: https://packagist.org/packages/nass600/get-id3
 stylization from old veresion of itunes
 player: http://jplayer.org/
 created favicon from my png using favicon.cc
+table sorter plugin: http://tablesorter.com/
