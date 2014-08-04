@@ -107,7 +107,7 @@ function draggable()
 {
 	$('.songRow').each(function()
 	{
-		$(this).draggable({revert: true});
+		$(this).draggable({revert: 'invalid'});
 	});
 }
 
