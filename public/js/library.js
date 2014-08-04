@@ -136,8 +136,7 @@ function droppable()
 						makePlaylistsClickable();
 					}
 				});
-			},
-			tolerance: 'touch'
+			}
 		})
 	});
 
