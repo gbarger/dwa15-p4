@@ -2,12 +2,13 @@
 
 class UserController extends \BaseController 
 {
-	
+	// display the login page
 	public function getUserLogin()
 	{
 		return View::make('login');
 	}
 
+	// log the user in, or return error if login data is bad
 	public function postUserLogin()
 	{
 		$cred = Input::only('email','password');
@@ -26,6 +27,7 @@ class UserController extends \BaseController
 		}
 	}
 
+	// log the user out
 	public function getUserLogout()
 	{
 		Auth::logout();
@@ -33,11 +35,13 @@ class UserController extends \BaseController
 		return Redirect::to('/');
 	}
 
+	// display the user sign up page
 	public function getUserSignup()
 	{
 		return View::make('signup');
 	}
 
+	// do some basic error checking and insert a new user to the users table, then log in
 	public function postUserSignup()
 	{
 		$errors = array();
@@ -76,6 +80,7 @@ class UserController extends \BaseController
 		}
 	}
 
+	// display the update profile page with the current user's email
 	public function getUpdateProfile()
 	{
 		$uid = Auth::id();
@@ -85,6 +90,7 @@ class UserController extends \BaseController
 			->with('email', $user->email);
 	}
 
+	// do some basic error checking, then update the user's email address and password
 	public function postUpdateProfile()
 	{
 		$errors = array();

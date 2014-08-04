@@ -2,6 +2,10 @@
 
 class PlaylistItemController extends \BaseController
 {
+	/* add items to a playlist, this can either be from the library 
+	 * or by moving a playlist item from another playlist, or 
+	 * merging one playlist into another.
+	 */
 	public function postNewPlaylistItem()
 	{
 		$dropId = Input::get('dropped');
@@ -11,6 +15,7 @@ class PlaylistItemController extends \BaseController
 		$lastSong = PlaylistItem::where('playlist_id','=',$playlistId)->orderBy('order','desc')->get()->first();
 		$orderValue = $lastSong['attributes']['order'] + 1;
 
+		// if id type is 'sid' then add the song to the playlist
 		if ($dropType == 'sid')
 		{
 			$newItem = new PlaylistItem();
@@ -19,6 +24,7 @@ class PlaylistItemController extends \BaseController
 			$newItem->song_id = $dropId;
 			$newItem->save();
 		}
+		// if the type is 'iid' then add the playlist item from one playlist to the dropped playlist
 		elseif ($dropType == 'iid')
 		{
 			$updateItem = PlaylistItem::find($dropId);
@@ -26,6 +32,7 @@ class PlaylistItemController extends \BaseController
 			$updateItem->order = $orderValue;
 			$updateItem->save();
 		}
+		// if the type is 'pid' then merge one playlist into the other and delete the unneeded playlist
 		elseif ($dropType == 'pid')
 		{
 			$moveItems = PlaylistItem::where('playlist_id', '=', $dropId)->orderBy('order')->get();
@@ -41,6 +48,7 @@ class PlaylistItemController extends \BaseController
 
 			$plist = Playlist::where('id', '=', $dropId)->delete();
 		}
+		// the type is invalid, so return a 400
 		else
 		{
 			return Response::make('That is an invalid item to add to playlist', 400);
@@ -49,6 +57,7 @@ class PlaylistItemController extends \BaseController
 		return Response::make('song added', 200);
 	}
 
+	// return a list of the playlist items based on the given playlist id
 	public function getPlaylistItems($pid)
 	{
 		$uid = Auth::id();

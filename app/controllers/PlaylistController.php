@@ -2,6 +2,7 @@
 
 class PlaylistController extends \BaseController
 {
+	// get a list of the playlists for the logged in user
 	public function getPlaylists()
 	{
 		$playlists = Playlist::where('user_id', '=', Auth::id())->get();
@@ -9,6 +10,7 @@ class PlaylistController extends \BaseController
 		return Response::json($playlists);
 	}
 
+	// create a new playlist
 	public function postNewPlaylist()
 	{
 		$name = Input::get('plistName');
@@ -21,6 +23,7 @@ class PlaylistController extends \BaseController
 		return Response::make($plist->id, 200);
 	}
 
+	// edit the playlist name
 	public function postEditPlaylist()
 	{
 		$pid = Input::get('pid');
