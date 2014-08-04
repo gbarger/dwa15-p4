@@ -2,7 +2,7 @@
 
 class SongController extends \BaseController
 {
-
+	// return either the library page, or the list of songs in the library
 	public function getLibrary($format = 'html')
 	{
 		$uid = Auth::id();
@@ -21,6 +21,10 @@ class SongController extends \BaseController
 		}
 	}
 
+	/* When songs are dragged to the form, the files are posted here.
+	 * Save the file, then get the id3 details and save the song to 
+	 * the database with the tag details.
+	 */
 	public function postSongUpload()
 	{
 		$allowExt = array('mp3');
@@ -80,6 +84,7 @@ class SongController extends \BaseController
 		}
 	}
 
+	// update the id3 tag values in the song database
 	public function postSongUpdate()
 	{
 		$song = Song::find(Input::get('sid'));
@@ -107,6 +112,7 @@ class SongController extends \BaseController
 	}
 }
 
+// this function gets the data for a specific tag or returns '' if tag not found
 function getTag($fileInfoArray, $tagName, $altValue)
 {
 	$tagValue = '';

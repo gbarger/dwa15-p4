@@ -2,6 +2,7 @@
 
 class UserController extends \BaseController 
 {
+	
 	public function getUserLogin()
 	{
 		return View::make('login');

@@ -1,18 +1,22 @@
-var listType = 0;
-var playlistItems = new Array();
-var jplayerLoaded = false;
-var myPlayer = null;
+// global variables needed
+var listType = 0; // the type of list to reload 0, greater than 0 is a playlist
+var playlistItems = new Array(); // the list of items for the music player
+var jplayerLoaded = false; // the player only needs to be loaded once, then updated
+var myPlayer = null; // the player
 
+// when the DOM is ready
 $(document).ready(function()
 {
 	jPlayerLoaded = false;
 
+	// display the library when clicking on it
 	$('#libLink').on('click',function()
 	{
 		listType = 0;
 		refreshLibrary();
 	});
 
+	// hide the music table and show the upload box when clicking
 	$('#addLink').on('click',function()
 	{
 		listType = -1;
@@ -20,14 +24,17 @@ $(document).ready(function()
 		$('#dropArea').show();
 	});
 
+	// hide the upload and the form for adding new playlists by default
 	$('#dropArea').hide();
 	$('#playlistForm').hide();
 
+	// show the new playlist form when clicking
 	$('#createPlaylist').on('click',function()
 	{
 		$('#playlistForm').slideDown();
 	});
 
+	// when submitting the playlist form create the playlist and add show it in the nav
 	$('#playlistForm').submit(function(event)
 	{
 		var nameVal = $('#plistName').val();
@@ -58,6 +65,7 @@ $(document).ready(function()
 		event.preventDefault();
 	});
 
+	// as typing happens in the search box, filter the song table
 	$('#searchBox').on('keyup', function()
 	{
 		var searchVal = $(this).val().toLowerCase();
@@ -73,9 +81,28 @@ $(document).ready(function()
 		});
 	});
 
+	// hide the help on load
+	$('#helpDiv').hide();
+
+	// display the help when clicking the help link
+	$('#helpLink').on('click', function()
+	{
+		$('#helpDiv').show();
+
+		event.preventDefault();
+	});
+
+	// hide the help again when clicking anywhere on the div
+	$('#helpDiv').on('click', function()
+	{
+		$('#helpDiv').hide();
+	});
+
+	// init all the screen items
 	redrawScreen();
 });
 
+// make the correct items draggable
 function draggable()
 {
 	$('.songRow').each(function()
@@ -84,6 +111,7 @@ function draggable()
 	});
 }
 
+// make the playlists and trash droppable
 function droppable()
 {
 	$('#playlists li').each(function()
@@ -156,6 +184,7 @@ function droppable()
 	});
 }
 
+// make the songs clickable to send the correct song to the player
 function clickable()
 {
 	$('.playRow').on('click', function() 
@@ -167,6 +196,7 @@ function clickable()
 	});
 }
 
+// make the playlists clickable so they will load and play the playlist
 function makePlaylistsClickable()
 {
 	$('.playlists li').each(function(i, value)
@@ -211,6 +241,7 @@ function makePlaylistsClickable()
 	});
 }
 
+// this will refresh the list of playlists in the left nav
 function refreshPlaylistMenu()
 {
 	$.ajax(
@@ -229,10 +260,12 @@ function refreshPlaylistMenu()
 			$('#playlists').html(liData);
 
 			makePlaylistsClickable();
+			droppable();
 		}
 	});
 }
 
+// this will refresh the listing of songs in the table for a given playlist
 function refreshPlaylist(playlistId)
 {
 	listType = playlistId;
@@ -277,6 +310,7 @@ function refreshPlaylist(playlistId)
 	});
 }
 
+// display the library songs in the songs table
 function refreshLibrary()
 {
 	$.ajax(
@@ -349,7 +383,7 @@ function refreshLibrary()
 	});
 }
 
-// work on this - redraw the playlists and songs
+// redraw the ajax items on the screen
 function redrawScreen()
 {
 	if (listType == 0)
@@ -357,12 +391,13 @@ function redrawScreen()
 	else if (listType != -1)
 		refreshPlaylist(listType);
 
-	makePlaylistsClickable();
+	refreshPlaylistMenu();
 
 	draggable();
 	droppable();
 }
 
+// either build the player if it hasn't been played yet, or set the playlist if the plalyer has been loaded
 function buildPlayer(playList)
 {
 	if (jPlayerLoaded)

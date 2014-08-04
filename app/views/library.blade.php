@@ -14,7 +14,8 @@
 	<div id="controls" class="gradient">
 		<div id="userActions">
 			<a href="./logout">Sign Out</a> | 
-			<a href="./update-profile">Update Profile</a>
+			<a href="./update-profile">Update Profile</a> | 
+			<a href="./" id="helpLink">Help</a>
 		</div>
 
 		<div id="searchDiv">
@@ -112,5 +113,9 @@
 	<div id="footer" class="gradient">
 		<div id="createPlaylist"><img src="./images/add.png" /></div>
 		<div id="trash"><img src="./images/trash.png" /></div>
+	</div>
+
+	<div id="helpDiv">
+		<img src="./images/help.png" />
 	</div>
 @stop

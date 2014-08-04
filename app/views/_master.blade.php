@@ -11,7 +11,6 @@
 	<link rel="stylesheet" type="text/css" href="./css/dropzone.css" />
 	<link rel="stylesheet" type="text/css" href="./css/player-skins/blue.monday/jplayer.blue.monday.css" />
 	<link rel="stylesheet" type="text/css" href="./css/styles.css" />
-	<link rel="stylesheet" type="text/css" href="./css/library.css" />
 	<link rel="icon" type="image/ico" href="/favicon.ico" />
 </head>
 <body>
