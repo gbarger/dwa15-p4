@@ -6,8 +6,8 @@
 
 ## Project Links
 ****************
-My [Github Repo](https://github.com/gbarger/dwa15-p4)
-My [Live URL](https://gbarger.com/school/2014/summer/csci_s15/p4/public). You can log in with a username AND password of test@test.com
+- My [Github Repo](https://github.com/gbarger/dwa15-p4)
+ My [Live URL](https://gbarger.com/school/2014/summer/csci_s15/p4/public). You can log in with a username AND password of test@test.com
 
 ## Project Description
 ***********************
