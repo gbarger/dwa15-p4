@@ -136,3 +136,8 @@ th.headerSortDown
 	opacity: 1;
 	cursor: pointer;
 }
+.dropzone .dz-default.dz-message
+{
+	position: relative;
+	top: 150px;
+}
